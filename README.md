@@ -9,14 +9,6 @@ This is a RESTful API Starter with a single Hello World API endpoint.
 - **Linux:** `curl -L https://encore.dev/install.sh | bash`
 - **Windows:** `iwr https://encore.dev/install.ps1 | iex`
 
-## Create app
-
-Create a local app from this template:
-
-```bash
-encore app create my-app-name --example=ts/hello-world
-```
-
 ## Run app locally
 
 Run this command from your application's root folder:
