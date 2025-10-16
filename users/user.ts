@@ -82,7 +82,7 @@ export const update = api(
         try {
             // Construir la query dinámicamente según los campos proporcionados
             const updates: string[] = [];
-            const values: any[] = [];
+            const values: (string | number)[] = [];
             
             if (email !== undefined) {
                 updates.push(`email = $${values.length + 1}`);

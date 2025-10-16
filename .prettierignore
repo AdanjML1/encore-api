@@ -1,0 +1,5 @@
+node_modules/
+encore.gen/
+dist/
+*.log
+package-lock.json

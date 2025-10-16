@@ -12,7 +12,10 @@ interface Response {
     message?: string;
 }
 
-//endpoint para obtener todos los productos
+/**
+ * Obtiene todos los productos disponibles
+ * @returns Promise con la lista de productos ordenados por fecha de creación (más recientes primero)
+ */
 export const list = api(
     { expose: true, method: "GET", path: "/products" },
     async (): Promise<{ products: Product[] }> => {
@@ -27,6 +30,11 @@ export const list = api(
         return {products}
     }
 )
+/**
+ * Obtiene un producto específico por su ID
+ * @param id - ID único del producto a buscar
+ * @returns Promise con el producto encontrado o mensaje de error si no existe
+ */
 export const get = api(
     { expose: true, method: "GET", path: "/products/:id" },
     async ({ id }: { id: number }): Promise<Response> => {
@@ -48,7 +56,12 @@ export const get = api(
         return { product: rows[0] };
     }
 );
-// Endpoint para crear producto
+/**
+ * Crea un nuevo producto en el sistema
+ * @param name - Nombre del producto
+ * @param stock - Cantidad en stock del producto
+ * @returns Promise con el producto creado o mensaje de error si falla la creación
+ */
 export const create = api(
     { expose: true, method: "POST", path: "/products" },
     async ({ name, stock }: { name: string, stock:number }): Promise<Response> => {
@@ -69,7 +82,11 @@ export const create = api(
         }
     }
 );
-//Endpoint para eliminar producto 
+/**
+ * Elimina un producto del sistema por su ID
+ * @param id - ID único del producto a eliminar
+ * @returns Promise con el producto eliminado o mensaje de error si no existe
+ */
 export const remove = api(
     { expose: true, method: "DELETE", path: "/products/:id" },
     async ({ id }: { id: number }): Promise<Response> => {
@@ -93,14 +110,20 @@ export const remove = api(
         };
     }
 );
-// Endpoint para actualizar un usuario
+/**
+ * Actualiza un producto existente por su ID
+ * @param id - ID único del producto a actualizar
+ * @param name - Nuevo nombre del producto (opcional)
+ * @param stock - Nueva cantidad en stock del producto (opcional)
+ * @returns Promise con el producto actualizado o mensaje de error si no existe
+ */
 export const update = api(
     { expose: true, method: "PUT", path: "/products/:id" },
     async ({ id, name, stock }: { id: number; name?: string; stock?: number }): Promise<Response> => {
         try {
             // Construir la query dinámicamente según los campos proporcionados
             const updates: string[] = [];
-            const values: any[] = [];
+            const values: (string | number)[] = [];
             
             if (name !== undefined) {
                 updates.push(`name = $${values.length + 1}`);
